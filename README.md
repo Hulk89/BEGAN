@@ -10,6 +10,7 @@ BEGAN에서 residual추가 및 layer norm을 추가한 소스.
 
 ![28000의 이미지](./img/28000.png)
 ![34000의 이미지](./img/34000.png)
+![52000의 이미지](./img/52000.png)
 
 # TODO
 * decoder가 원래 구현보다 capacity가 조금 작은데, 이 때문에 edge들이 사라지는 것 같다.
