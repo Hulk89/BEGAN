@@ -8,7 +8,9 @@ BEGAN에서 residual추가 및 layer norm을 추가한 소스.
 
 짬짬히 만든거라 실험을 많이 해보지는 못하지만, 현재까지는 옷에 대해서만 generation을 하고있다.
 
-![28000의 이미지](./img/28000.png =600x)
+> input fake가 generator가 만든 이미지, input real이 실제 이미지이다.
+
+![28000의 이미지](./img/28000.png)
 ![34000의 이미지](./img/34000.png)
 ![52000의 이미지](./img/52000.png)
 
