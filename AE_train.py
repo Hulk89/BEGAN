@@ -20,9 +20,11 @@ if __name__=='__main__':
     parser.add_argument('--batch',       dest='batch',        default=16,        type=int,   help='batch size')
     parser.add_argument('--iter',        dest='iter',         default=1000,      type=int,   help='num of iteration')
     parser.add_argument('--normalize',   dest='norm',         action="store_true",           help='layernorm and residual')
+    parser.add_argument("--prefix",      dest='pre',          default='')
     args = parser.parse_args()
     print("Settings: {}".format(args))
-    model_folder = "./models/AE_{}_gray_{}_normalize_{}_{}_{}".format(args.path,
+    model_folder = "./models/{}_AE_{}_gray_{}_normalize_{}_{}_{}".format(args.pre,
+                                                    args.path,
                                                     args.gray,
                                                     args.norm,
                                                     args.hidden,
@@ -43,7 +45,7 @@ if __name__=='__main__':
     lr = tf.train.exponential_decay(starter_learning_rate, 
                                     global_step,
                                     100,
-                                    0.98,
+                                    0.5,
                                     staircase=True)
     
     lr_ = tf.Variable(lr,
