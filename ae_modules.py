@@ -34,11 +34,13 @@ def Encoder(images,  ## N x 32 x 32 x (3 or 1)
                                conv_weight,
                                [1, 1, 1, 1],
                                "SAME")
-            res = tf.nn.elu(res)
             if normalize:
-                if tf.shape(input_) == tf.shape(res):
-                    res = input_ + res
                 res = tf.contrib.layers.layer_norm(res)
+
+            res = tf.nn.elu(res)
+
+            if normalize and (tf.shape(input_) == tf.shape(res)):
+                res = input_ + res
 
             if i in subsampling_layer:  # subsampling
                 res = tf.image.resize_nearest_neighbor(res,
@@ -96,16 +98,16 @@ def Decoder(encoded,  ## N x h
                                "SAME")
 
             if i != len(filter_shapes) -1:  # 마지막에 elu가 끼면 안될 듯...
+                if normalize:
+                    res = tf.contrib.layers.layer_norm(res)
                 res = tf.nn.elu(res)
 
             if i in upscaling_layer:  # subsampling
                 res = tf.image.resize_nearest_neighbor(res,
                                                        upscaling_size[upscaling_layer.index(i)])
-            if normalize: 
+            if normalize:
                 if tf.shape(input_) == tf.shape(res):
                     res = input_ + res
-                if i != len(filter_shapes) -1:
-                    res = tf.contrib.layers.layer_norm(res)
 
             input_ = res
 
