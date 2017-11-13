@@ -71,11 +71,11 @@ def Decoder(encoded,  ## N x h
         channel = 1
     else:
         channel = 3
-    filter_shapes = [[3, 3, n, n],
-                     [3, 3, n, n],
-                     [3, 3, n, n],  # 2*n, n인데 channel 뻥튀기가 귀찮아서.. 일단..
-                     [3, 3, n, n],
-                     [3, 3, n, n],  # 역시 같은 이유
+    filter_shapes = [[3, 3, 3*n, 3*n],
+                     [3, 3, 3*n, 3*n],
+                     [3, 3, 3*n, 2*n],
+                     [3, 3, 2*n, 2*n],
+                     [3, 3, 2*n, n],
                      [3, 3, n, n],
                      [3, 3, n, channel]]
 
@@ -84,9 +84,9 @@ def Decoder(encoded,  ## N x h
 
     with tf.variable_scope("{}_decoder".format(name), reuse=reuse) as scope:
         # fnn
-        fnn_res = tf.layers.dense(encoded, 8 * 8 * n)
+        fnn_res = tf.layers.dense(encoded, 8 * 8 * 3*n)
         fnn_res = tf.nn.elu(fnn_res)
-        input_ = tf.reshape(fnn_res, [-1, 8, 8, n])
+        input_ = tf.reshape(fnn_res, [-1, 8, 8, 3*n])
         # Convolution
         for i, filter_shape in enumerate(filter_shapes):
             conv_weight = tf.get_variable("conv_weight_{}".format(i),
