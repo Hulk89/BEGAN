@@ -85,7 +85,6 @@ def Decoder(encoded,  ## N x h
     with tf.variable_scope("{}_decoder".format(name), reuse=reuse) as scope:
         # fnn
         fnn_res = tf.layers.dense(encoded, 8 * 8 * 3*n)
-        fnn_res = tf.nn.elu(fnn_res)
         input_ = tf.reshape(fnn_res, [-1, 8, 8, 3*n])
         # Convolution
         for i, filter_shape in enumerate(filter_shapes):

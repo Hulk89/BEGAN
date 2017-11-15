@@ -84,17 +84,17 @@ if __name__=='__main__':
 
         # gradient descent
         opt_D = tf.train.AdamOptimizer(lr_)
-    
+
         train_op_D = opt_D.minimize(L_x, global_step=global_step)
-    
-    
+
+
     saver = tf.train.Saver()
-    
+
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
         sess.run(tf.global_variables_initializer())
         train_writer = tf.summary.FileWriter(model_folder,
                                              sess.graph)
-    
+
         t = tqdm(range(num_iter), desc="training AE")
         for epoch in t:
             #### real_image ####
@@ -104,8 +104,8 @@ if __name__=='__main__':
                                            merged_summary],
                                           feed_dict={mnist_images: batch_xs})
             t.set_postfix(loss_D=loss_D)
-    
+
             if epoch % 1000 == 0:
                 saver.save(sess, os.path.join(model_folder, "/model.ckpt"))
                 train_writer.add_summary(summary, epoch)
-    
+
